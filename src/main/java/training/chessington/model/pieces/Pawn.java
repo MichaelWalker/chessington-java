@@ -15,14 +15,7 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        List<Move> moves = new ArrayList<>();
-        moves.add(forwardOneSquare(from));
-
-        if (pieceIsUnmoved(from)) {
-            moves.add(forwardTwoSquares(from));
-        }
-
-        return moves;
+        return new ArrayList<>(forwardsMoves(from, board));
     }
 
     private boolean pieceIsUnmoved(Coordinates currentPosition) {
@@ -32,13 +25,19 @@ public class Pawn extends AbstractPiece {
         return currentPosition.getRow() == 1;
     }
 
-    private Move forwardOneSquare(Coordinates from) {
-        int rowDiff = colour == PlayerColour.WHITE ? -1 : 1;
-        return new Move(from, from.plus(rowDiff, 0));
-    }
+    private List<Move> forwardsMoves(Coordinates from, Board board) {
+        List<Move> moves = new ArrayList<>();
+        int direction = colour == PlayerColour.WHITE ? -1 : 1;
+        int maxNumberOfMoves = pieceIsUnmoved(from) ? 2 : 1;
 
-    private Move forwardTwoSquares(Coordinates from) {
-        int rowDiff = colour == PlayerColour.WHITE ? -2 : 2;
-        return new Move(from, from.plus(rowDiff, 0));
+        for (int count = direction; Math.abs(count) <= maxNumberOfMoves; count += direction) {
+            Coordinates nextSquare = from.plus(count, 0);
+            if (board.get(nextSquare) != null) {
+                return moves;
+            }
+            moves.add(new Move(from, nextSquare));
+        }
+
+        return moves;
     }
 }
