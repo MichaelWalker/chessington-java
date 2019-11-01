@@ -26,18 +26,24 @@ public class Pawn extends AbstractPiece {
     }
 
     private List<Move> forwardsMoves(Coordinates from, Board board) {
-        List<Move> moves = new ArrayList<>();
-        int direction = colour == PlayerColour.WHITE ? -1 : 1;
-        int maxNumberOfMoves = pieceIsUnmoved(from) ? 2 : 1;
+        int maxRange = pieceIsUnmoved(from) ? 2 : 1;
 
-        for (int count = direction; Math.abs(count) <= maxNumberOfMoves; count += direction) {
-            Coordinates nextSquare = from.plus(count, 0);
-            if (!(board.isInRange(nextSquare) && board.get(nextSquare) == null)) {
+        List<Move> moves = new ArrayList<>();
+        Coordinates nextSquare = from.duplicate();
+
+        for (int distance = 1; distance <= maxRange; distance++) {
+            nextSquare = nextSquare.plus(forward(), 0);
+            if (board.isInRange(nextSquare) && board.isEmptyAt(nextSquare)) {
+                moves.add(new Move(from, nextSquare));
+            } else {
                 return moves;
             }
-            moves.add(new Move(from, nextSquare));
         }
 
         return moves;
+    }
+
+    private int forward() {
+        return colour == PlayerColour.WHITE ? -1 : 1;
     }
 }

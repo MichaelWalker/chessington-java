@@ -54,4 +54,8 @@ public class Board {
         return coordinates.getRow() >= 0 && coordinates.getRow() < 8
                 && coordinates.getCol() >= 0 && coordinates.getCol() < 8;
     }
+
+    public boolean isEmptyAt(Coordinates coordinates) {
+        return get(coordinates) == null;
+    }
 }

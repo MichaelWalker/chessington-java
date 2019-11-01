@@ -41,4 +41,8 @@ public final class Coordinates {
     public Coordinates plus(int rowDiff, int colDiff) {
         return new Coordinates(row + rowDiff, col + colDiff);
     }
+
+    public Coordinates duplicate() {
+        return new Coordinates(row, col);
+    }
 }
