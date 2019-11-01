@@ -32,7 +32,7 @@ public class Pawn extends AbstractPiece {
 
         for (int count = direction; Math.abs(count) <= maxNumberOfMoves; count += direction) {
             Coordinates nextSquare = from.plus(count, 0);
-            if (board.get(nextSquare) != null) {
+            if (!(board.isInRange(nextSquare) && board.get(nextSquare) == null)) {
                 return moves;
             }
             moves.add(new Move(from, nextSquare));
