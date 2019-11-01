@@ -47,4 +47,27 @@ public class BoardTest {
         assertThat(board.get(from)).isNull();
         assertThat(board.get(to)).isColour(PlayerColour.WHITE).isPiece(PAWN);
     }
+
+    @Test
+    public void testIsOutOfRange() {
+        Board board = Board.empty();
+
+        assertThat(board.isInRange(new Coordinates(-1, 0))).isFalse();
+        assertThat(board.isInRange(new Coordinates(0, -1))).isFalse();
+        assertThat(board.isInRange(new Coordinates(-1, -1))).isFalse();
+        assertThat(board.isInRange(new Coordinates(8, 7))).isFalse();
+        assertThat(board.isInRange(new Coordinates(7, 8))).isFalse();
+        assertThat(board.isInRange(new Coordinates(8, 8))).isFalse();
+    }
+
+    @Test
+    public void testIsInRange() {
+        Board board = Board.empty();
+
+        assertThat(board.isInRange(new Coordinates(0, 0))).isTrue();
+        assertThat(board.isInRange(new Coordinates(0, 7))).isTrue();
+        assertThat(board.isInRange(new Coordinates(7, 0))).isTrue();
+        assertThat(board.isInRange(new Coordinates(7, 7))).isTrue();
+        assertThat(board.isInRange(new Coordinates(4, 4))).isTrue();
+    }
 }
