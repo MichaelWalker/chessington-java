@@ -36,7 +36,7 @@ public class Pawn extends AbstractPiece {
         Coordinates nextSquare = from.duplicate();
 
         for (int distance = 1; distance <= maxRange; distance++) {
-            nextSquare = nextSquare.plus(forward(), 0);
+            nextSquare = nextSquare.step(forward());
             if (board.hasSquare(nextSquare) && board.isEmptyAt(nextSquare)) {
                 moves.add(new Move(from, nextSquare));
             } else {
@@ -49,8 +49,8 @@ public class Pawn extends AbstractPiece {
 
     private List<Move> captureMoves(Coordinates from, Board board) {
         List<Coordinates> possibleCaptureSquares = List.of(
-                from.plus(forward(), 1),
-                from.plus(forward(), -1)
+                from.step(forward()),
+                from.step(forward())
         );
 
         return possibleCaptureSquares.stream()
@@ -60,7 +60,7 @@ public class Pawn extends AbstractPiece {
                 .collect(Collectors.toList());
     }
 
-    private int forward() {
-        return colour == PlayerColour.WHITE ? -1 : 1;
+    private Direction forward() {
+        return colour == PlayerColour.WHITE ? Direction.NORTH : Direction.SOUTH;
     }
 }
