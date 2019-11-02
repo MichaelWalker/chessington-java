@@ -3,8 +3,9 @@ package training.chessington.model;
 import training.chessington.model.pieces.*;
 
 public class Board {
+    public static final int SIZE = 8;
 
-    private Piece[][] board = new Piece[8][8];
+    private Piece[][] board = new Piece[SIZE][SIZE];
 
     private Board() {
     }
@@ -14,7 +15,7 @@ public class Board {
         board.setBackRow(0, PlayerColour.BLACK);
         board.setBackRow(7, PlayerColour.WHITE);
 
-        for (int col = 0; col < 8; col++) {
+        for (int col = 0; col < SIZE; col++) {
             board.board[1][col] = new Pawn(PlayerColour.BLACK);
             board.board[6][col] = new Pawn(PlayerColour.WHITE);
         }
@@ -51,8 +52,8 @@ public class Board {
     }
 
     public boolean hasSquare(Coordinates coordinates) {
-        return coordinates.getRow() >= 0 && coordinates.getRow() < 8
-                && coordinates.getCol() >= 0 && coordinates.getCol() < 8;
+        return coordinates.getRow() >= 0 && coordinates.getRow() < SIZE
+                && coordinates.getCol() >= 0 && coordinates.getCol() < SIZE;
     }
 
     public boolean isEmptyAt(Coordinates coordinates) {
