@@ -58,4 +58,19 @@ public class Board {
     public boolean isEmptyAt(Coordinates coordinates) {
         return get(coordinates) == null;
     }
+
+    public boolean hasWhitePieceAt(Coordinates coordinates) {
+        return hasPieceOfColourAt(coordinates, PlayerColour.WHITE);
+    }
+
+    public boolean hasBlackPieceAt(Coordinates coordinates) {
+        return hasPieceOfColourAt(coordinates, PlayerColour.BLACK);
+    }
+
+    private boolean hasPieceOfColourAt(Coordinates coordinates, PlayerColour colour) {
+        if (isEmptyAt(coordinates)) {
+            return false;
+        }
+        return get(coordinates).getColour() == colour;
+    }
 }

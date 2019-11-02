@@ -6,7 +6,9 @@ import training.chessington.model.Move;
 import training.chessington.model.PlayerColour;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pawn extends AbstractPiece {
     public Pawn(PlayerColour colour) {
@@ -15,7 +17,10 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        return new ArrayList<>(forwardsMoves(from, board));
+        List<Move> moves = new ArrayList<>();
+        moves.addAll(forwardsMoves(from, board));
+        moves.addAll(captureMoves(from, board));
+        return moves;
     }
 
     private boolean pieceIsUnmoved(Coordinates currentPosition) {
@@ -43,7 +48,26 @@ public class Pawn extends AbstractPiece {
         return moves;
     }
 
+    private List<Move> captureMoves(Coordinates from, Board board) {
+        List<Coordinates> possibleCaptureSquares = List.of(
+                from.plus(forward(), 1),
+                from.plus(forward(), -1)
+        );
+
+        return possibleCaptureSquares.stream()
+                .filter(board::isInRange)
+                .filter(square -> containsEnemy(board, square))
+                .map(square -> new Move(from, square))
+                .collect(Collectors.toList());
+    }
+
     private int forward() {
         return colour == PlayerColour.WHITE ? -1 : 1;
+    }
+
+    private boolean containsEnemy(Board board, Coordinates coordinates) {
+        return colour == PlayerColour.WHITE ?
+                board.hasBlackPieceAt(coordinates) :
+                board.hasWhitePieceAt(coordinates);
     }
 }
