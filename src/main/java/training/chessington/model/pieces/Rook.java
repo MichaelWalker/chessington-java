@@ -22,25 +22,4 @@ public class Rook extends AbstractPiece {
         moves.addAll(movesInDirection(from, board, Direction.WEST));
         return moves;
     }
-
-    private List<Move> movesInDirection(Coordinates from, Board board, Direction direction) {
-        List<Move> moves = new ArrayList<>();
-        Coordinates nextSquare = from.step(direction);
-
-        while(board.hasSquare(nextSquare)) {
-            if (containsFriend(board, nextSquare)) {
-                return moves;
-            }
-
-            moves.add(new Move(from, nextSquare));
-
-            if (containsEnemy(board, nextSquare)) {
-                return moves;
-            }
-
-            nextSquare = nextSquare.step(direction);
-        }
-
-        return moves;
-    }
 }
