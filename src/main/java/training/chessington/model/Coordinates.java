@@ -45,7 +45,11 @@ public final class Coordinates {
     }
 
     public Coordinates step(Direction direction) {
-        return plus(direction.changeInRow, direction.changeInCol);
+        return steps(direction, 1);
+    }
+
+    public Coordinates steps(Direction direction, int times) {
+        return plus(direction.changeInRow * times, direction.changeInCol * times);
     }
 
     public Coordinates duplicate() {

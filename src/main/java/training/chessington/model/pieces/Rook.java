@@ -28,7 +28,15 @@ public class Rook extends AbstractPiece {
         Coordinates nextSquare = from.step(direction);
 
         while(board.hasSquare(nextSquare)) {
+            if (containsFriend(board, nextSquare)) {
+                return moves;
+            }
+
             moves.add(new Move(from, nextSquare));
+
+            if (containsEnemy(board, nextSquare)) {
+                return moves;
+            }
 
             nextSquare = nextSquare.step(direction);
         }

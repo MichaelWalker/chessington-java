@@ -34,4 +34,10 @@ public abstract class AbstractPiece implements Piece {
                 board.hasBlackPieceAt(coordinates) :
                 board.hasWhitePieceAt(coordinates);
     }
+
+    protected boolean containsFriend(Board board, Coordinates coordinates) {
+        return colour == PlayerColour.WHITE ?
+                board.hasWhitePieceAt(coordinates) :
+                board.hasBlackPieceAt(coordinates);
+    }
 }

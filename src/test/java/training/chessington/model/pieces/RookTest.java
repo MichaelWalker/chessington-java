@@ -51,4 +51,47 @@ public class RookTest {
                 new Move(position, new Coordinates(4, 7))
         );
     }
+
+    @Test
+    public void rookCantMoveThroughPiecesOfTheSameColour() {
+        Board board = Board.empty();
+        Rook rook = new Rook(PlayerColour.WHITE);
+        Coordinates rookPosition = new Coordinates(4, 4);
+        board.placePiece(rookPosition, rook);
+
+        // Surround the rook on 3 sides
+        board.placePiece(rookPosition.step(Direction.SOUTH), new Pawn(PlayerColour.WHITE));
+        board.placePiece(rookPosition.step(Direction.EAST), new Pawn(PlayerColour.WHITE));
+        board.placePiece(rookPosition.step(Direction.WEST), new Pawn(PlayerColour.WHITE));
+
+        // place another piece 2 steps in front.
+        board.placePiece(rookPosition.steps(Direction.NORTH, 2), new Pawn(PlayerColour.WHITE));
+
+        List<Move> moves = rook.getAllowedMoves(rookPosition, board);
+
+        assertThat(moves).containsOnly(new Move(rookPosition, rookPosition.step(Direction.NORTH)));
+    }
+
+    @Test
+    public void rookCanTakeEnemyPieceButNotMoveThroughIt() {
+        Board board = Board.empty();
+        Rook rook = new Rook(PlayerColour.WHITE);
+        Coordinates rookPosition = new Coordinates(4, 4);
+        board.placePiece(rookPosition, rook);
+
+        // Surround the rook on 3 sides
+        board.placePiece(rookPosition.step(Direction.SOUTH), new Pawn(PlayerColour.WHITE));
+        board.placePiece(rookPosition.step(Direction.EAST), new Pawn(PlayerColour.WHITE));
+        board.placePiece(rookPosition.step(Direction.WEST), new Pawn(PlayerColour.WHITE));
+
+        // place another piece 2 steps in front.
+        board.placePiece(rookPosition.steps(Direction.NORTH, 2), new Pawn(PlayerColour.BLACK));
+
+        List<Move> moves = rook.getAllowedMoves(rookPosition, board);
+
+        assertThat(moves).containsOnly(
+                new Move(rookPosition, rookPosition.steps(Direction.NORTH, 1)),
+                new Move(rookPosition, rookPosition.steps(Direction.NORTH, 2))
+        );
+    }
 }
