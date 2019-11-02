@@ -6,7 +6,6 @@ import training.chessington.model.Move;
 import training.chessington.model.PlayerColour;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +37,7 @@ public class Pawn extends AbstractPiece {
 
         for (int distance = 1; distance <= maxRange; distance++) {
             nextSquare = nextSquare.plus(forward(), 0);
-            if (board.isInRange(nextSquare) && board.isEmptyAt(nextSquare)) {
+            if (board.hasSquare(nextSquare) && board.isEmptyAt(nextSquare)) {
                 moves.add(new Move(from, nextSquare));
             } else {
                 return moves;
@@ -55,7 +54,7 @@ public class Pawn extends AbstractPiece {
         );
 
         return possibleCaptureSquares.stream()
-                .filter(board::isInRange)
+                .filter(board::hasSquare)
                 .filter(square -> containsEnemy(board, square))
                 .map(square -> new Move(from, square))
                 .collect(Collectors.toList());
@@ -63,11 +62,5 @@ public class Pawn extends AbstractPiece {
 
     private int forward() {
         return colour == PlayerColour.WHITE ? -1 : 1;
-    }
-
-    private boolean containsEnemy(Board board, Coordinates coordinates) {
-        return colour == PlayerColour.WHITE ?
-                board.hasBlackPieceAt(coordinates) :
-                board.hasWhitePieceAt(coordinates);
     }
 }

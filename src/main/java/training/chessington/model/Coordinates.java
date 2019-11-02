@@ -1,5 +1,7 @@
 package training.chessington.model;
 
+import training.chessington.model.pieces.Direction;
+
 import java.util.Objects;
 
 public final class Coordinates {
@@ -40,6 +42,10 @@ public final class Coordinates {
 
     public Coordinates plus(int rowDiff, int colDiff) {
         return new Coordinates(row + rowDiff, col + colDiff);
+    }
+
+    public Coordinates step(Direction direction) {
+        return plus(direction.changeInRow, direction.changeInCol);
     }
 
     public Coordinates duplicate() {

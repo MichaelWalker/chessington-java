@@ -50,7 +50,7 @@ public class Board {
         board[coords.getRow()][coords.getCol()] = piece;
     }
 
-    public boolean isInRange(Coordinates coordinates) {
+    public boolean hasSquare(Coordinates coordinates) {
         return coordinates.getRow() >= 0 && coordinates.getRow() < 8
                 && coordinates.getCol() >= 0 && coordinates.getCol() < 8;
     }
