@@ -8,6 +8,8 @@ import training.chessington.model.PlayerColour;
 
 import java.util.List;
 
+import static training.chessington.model.TestHelpers.surroundPiece;
+import static training.chessington.model.pieces.Direction.NORTH;
 import static training.chessington.model.pieces.PieceAssert.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -44,11 +46,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(PlayerColour.WHITE);
         Coordinates bishopPosition = new Coordinates(4, 4);
         board.placePiece(bishopPosition, bishop);
-
-        // Surround the bishop on 3 sides
-        board.placePiece(bishopPosition.step(Direction.SOUTH_EAST), new Pawn(PlayerColour.WHITE));
-        board.placePiece(bishopPosition.step(Direction.SOUTH_WEST), new Pawn(PlayerColour.WHITE));
-        board.placePiece(bishopPosition.step(Direction.NORTH_WEST), new Pawn(PlayerColour.WHITE));
+        surroundPiece(board, bishopPosition, NORTH);
 
         // place another piece 2 steps in front.
         board.placePiece(bishopPosition.steps(Direction.NORTH_EAST, 2), new Pawn(PlayerColour.WHITE));
@@ -64,11 +62,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(PlayerColour.WHITE);
         Coordinates bishopPosition = new Coordinates(4, 4);
         board.placePiece(bishopPosition, bishop);
-
-        // Surround the bishop on 3 sides
-        board.placePiece(bishopPosition.step(Direction.SOUTH_EAST), new Pawn(PlayerColour.WHITE));
-        board.placePiece(bishopPosition.step(Direction.SOUTH_WEST), new Pawn(PlayerColour.WHITE));
-        board.placePiece(bishopPosition.step(Direction.NORTH_WEST), new Pawn(PlayerColour.WHITE));
+        surroundPiece(board, bishopPosition, NORTH);
 
         // place another piece 2 steps in front.
         board.placePiece(bishopPosition.steps(Direction.NORTH_EAST, 2), new Pawn(PlayerColour.BLACK));

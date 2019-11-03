@@ -9,6 +9,8 @@ import training.chessington.model.PlayerColour;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static training.chessington.model.TestHelpers.surroundPiece;
+import static training.chessington.model.pieces.Direction.NORTH;
 
 public class RookTest {
 
@@ -58,11 +60,7 @@ public class RookTest {
         Rook rook = new Rook(PlayerColour.WHITE);
         Coordinates rookPosition = new Coordinates(4, 4);
         board.placePiece(rookPosition, rook);
-
-        // Surround the rook on 3 sides
-        board.placePiece(rookPosition.step(Direction.SOUTH), new Pawn(PlayerColour.WHITE));
-        board.placePiece(rookPosition.step(Direction.EAST), new Pawn(PlayerColour.WHITE));
-        board.placePiece(rookPosition.step(Direction.WEST), new Pawn(PlayerColour.WHITE));
+        surroundPiece(board, rookPosition, NORTH);
 
         // place another piece 2 steps in front.
         board.placePiece(rookPosition.steps(Direction.NORTH, 2), new Pawn(PlayerColour.WHITE));
@@ -78,11 +76,7 @@ public class RookTest {
         Rook rook = new Rook(PlayerColour.WHITE);
         Coordinates rookPosition = new Coordinates(4, 4);
         board.placePiece(rookPosition, rook);
-
-        // Surround the rook on 3 sides
-        board.placePiece(rookPosition.step(Direction.SOUTH), new Pawn(PlayerColour.WHITE));
-        board.placePiece(rookPosition.step(Direction.EAST), new Pawn(PlayerColour.WHITE));
-        board.placePiece(rookPosition.step(Direction.WEST), new Pawn(PlayerColour.WHITE));
+        surroundPiece(board, rookPosition, NORTH);
 
         // place another piece 2 steps in front.
         board.placePiece(rookPosition.steps(Direction.NORTH, 2), new Pawn(PlayerColour.BLACK));

@@ -6,7 +6,9 @@ import training.chessington.model.Move;
 import training.chessington.model.PlayerColour;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Queen extends AbstractPiece {
     public Queen(PlayerColour colour) {
@@ -15,6 +17,8 @@ public class Queen extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        return new ArrayList<>();
+        return Arrays.stream(Direction.values())
+                .flatMap(direction -> movesInDirection(from, board, direction).stream())
+                .collect(Collectors.toList());
     }
 }
