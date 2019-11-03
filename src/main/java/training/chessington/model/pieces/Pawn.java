@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static training.chessington.model.pieces.Direction.EAST;
+import static training.chessington.model.pieces.Direction.WEST;
+
 public class Pawn extends AbstractPiece {
     public Pawn(PlayerColour colour) {
         super(Piece.PieceType.PAWN, colour);
@@ -49,8 +52,8 @@ public class Pawn extends AbstractPiece {
 
     private List<Move> captureMoves(Coordinates from, Board board) {
         List<Coordinates> possibleCaptureSquares = List.of(
-                from.step(forward()),
-                from.step(forward())
+                from.step(forward()).step(EAST),
+                from.step(forward()).step(WEST)
         );
 
         return possibleCaptureSquares.stream()
