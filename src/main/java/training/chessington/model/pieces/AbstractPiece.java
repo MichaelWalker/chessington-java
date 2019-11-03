@@ -33,12 +33,12 @@ public abstract class AbstractPiece implements Piece {
         return colour.toString() + " " + type.toString();
     }
 
-    protected List<Move> movesInDirection(Coordinates from, Board board, Direction direction) {
+    protected List<Move> movesInDirection(Coordinates from, Board board, Direction direction, Integer maxRange) {
         List<Move> moves = new ArrayList<>();
         Coordinates nextSquare = from.step(direction);
 
-        while (board.hasSquare(nextSquare)) {
-            if (containsFriend(board, nextSquare)) {
+        for (int distance = 1; distance <= maxRange; distance++) {
+            if (!board.hasSquare(nextSquare) || containsFriend(board, nextSquare)) {
                 return moves;
             }
 
@@ -52,6 +52,10 @@ public abstract class AbstractPiece implements Piece {
         }
 
         return moves;
+    }
+
+    protected List<Move> movesInDirection(Coordinates from, Board board, Direction direction) {
+        return movesInDirection(from, board, direction, 8);
     }
 
     protected boolean containsEnemy(Board board, Coordinates coordinates) {
