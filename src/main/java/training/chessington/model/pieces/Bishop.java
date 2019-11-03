@@ -7,6 +7,10 @@ import training.chessington.model.PlayerColour;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static training.chessington.model.pieces.Direction.*;
+import static training.chessington.model.pieces.Direction.WEST;
 
 public class Bishop extends AbstractPiece {
     public Bishop(PlayerColour colour) {
@@ -15,13 +19,8 @@ public class Bishop extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        List<Move> moves = new ArrayList<>();
-
-        moves.addAll(movesInDirection(from, board, Direction.NORTH_WEST));
-        moves.addAll(movesInDirection(from, board, Direction.NORTH_EAST));
-        moves.addAll(movesInDirection(from, board, Direction.SOUTH_EAST));
-        moves.addAll(movesInDirection(from, board, Direction.SOUTH_WEST));
-
-        return moves;
+        return List.of(NORTH_WEST, NORTH_EAST, SOUTH_WEST, SOUTH_EAST).stream()
+                .flatMap(direction -> movesInDirection(from, board, direction).stream())
+                .collect(Collectors.toList());
     }
 }
