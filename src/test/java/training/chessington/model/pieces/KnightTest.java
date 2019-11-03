@@ -74,4 +74,19 @@ public class KnightTest {
         assertThat(moves).contains(new Move(knightPosition, new Coordinates(6, 5)));
         assertThat(moves).hasSize(8);
     }
+
+    @Test
+    public void knightCannotLeaveBoard() {
+        Board board = Board.empty();
+        Coordinates knightPosition = new Coordinates(0,0);
+        Knight knight = new Knight(WHITE);
+        board.placePiece(knightPosition, knight);
+
+        List<Move> moves = knight.getAllowedMoves(knightPosition, board);
+
+        assertThat(moves).containsOnlyOnce(
+                new Move(knightPosition, new Coordinates(2, 1)),
+                new Move(knightPosition, new Coordinates(1, 2))
+        );
+    }
 }

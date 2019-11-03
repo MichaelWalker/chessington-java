@@ -16,6 +16,7 @@ public class Knight extends AbstractPiece {
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
         return possibleSquares(from).stream()
+                .filter(board::hasSquare)
                 .filter(square -> !containsFriend(board, square))
                 .map(square -> new Move(from, square))
                 .collect(Collectors.toList());
